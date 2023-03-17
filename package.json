@@ -1,0 +1,25 @@
+{
+  "name": "bass-highlight",
+  "displayName": "bass_highlight",
+  "description": "Bass assembly extension",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.76.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "asm",
+      "aliases": ["asm", "asm"],
+      "extensions": [".asm",".snes.asm",".nes.asm",".md.asm",".megadrive.asm"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "asm",
+      "scopeName": "source.bass",
+      "path": "./syntaxes/asm.tmLanguage.json"
+    }]
+  }
+}
