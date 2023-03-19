@@ -1,11 +1,10 @@
 const {
     TextDocuments,
-    createConnection,
-    CompletionItem,
-    CompletionItemKind,
+    createConnection
 } = require("vscode-languageserver");
 
 const { TextDocument } = require("vscode-languageserver-textdocument");
+const { provideCompletionItems } = require("./completion");
 
 var exec = require("child_process").exec;
 
@@ -32,25 +31,12 @@ const getDiagnostics = (change) =>
 const connection = createConnection();
 const documents = new TextDocuments(TextDocument);
 
-function provideCompletionItems(params) {
-    const completionItems = [
-        // Create completion items for instructions, registers, etc.
-        CompletionItem.create('LDA', CompletionItemKind.Keyword),
-        CompletionItem.create('STA', CompletionItemKind.Keyword),
-        CompletionItem.create('REG_ACC', CompletionItemKind.Variable),
-        CompletionItem.create('REG_HVJOY_STATUS_4212', CompletionItemKind.Variable),
-        // Add more completion items as needed
-    ];
-
-    return completionItems;
-}
-
 connection.onInitialize(() => ({
     capabilities: {
         textDocumentSync: documents.syncKind,
         completionProvider: {
             resolveProvider: false,
-            triggerCharacters: [], // Specify any trigger characters for the completion provider
+            triggerCharacters: [],
         },
     },
 }));
@@ -66,4 +52,5 @@ documents.onDidSave((change) => {
 });
 
 documents.listen(connection);
+
 connection.listen();
