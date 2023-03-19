@@ -10,16 +10,39 @@
     "Programming Languages"
   ],
   "contributes": {
-    "languages": [{
-      "id": "asm",
-      "aliases": ["asm", "asm"],
-      "extensions": [".asm",".snes.asm",".nes.asm",".md.asm",".megadrive.asm"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "asm",
-      "scopeName": "source.bass",
-      "path": "./syntaxes/asm.tmLanguage.json"
-    }]
+    "languages": [
+      {
+        "id": "snes",
+        "aliases": [
+          "snes",
+          "Snes"
+        ],
+        "extensions": [
+          ".snes.asm"
+        ],
+        "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "bass",
+        "aliases": [
+          "bass",
+          "Bass"
+        ],
+        "extensions": [
+          ".asm",
+          ".nes.asm",
+          ".md.asm",
+          ".megadrive.asm"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "snes",
+        "scopeName": "source.bass",
+        "path": "./syntaxes/snes.asm.tmLanguage.json"
+      }
+    ]
   }
 }
