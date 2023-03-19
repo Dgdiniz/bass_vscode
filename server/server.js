@@ -1,12 +1,11 @@
 const {
-    DiagnosticSeverity,
     TextDocuments,
     createConnection,
     CompletionItem,
-    CompletionItemKind
+    CompletionItemKind,
 } = require("vscode-languageserver");
 
-const { TextDocument } = require("vscode-languageserver-protocol");
+const { TextDocument } = require("vscode-languageserver-textdocument");
 
 var exec = require("child_process").exec;
 
