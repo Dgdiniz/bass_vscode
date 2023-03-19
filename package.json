@@ -44,5 +44,14 @@
         "path": "./syntaxes/snes.asm.tmLanguage.json"
       }
     ]
+  },
+  "activationEvents": [
+    "onLanguage:snes"
+  ],
+  "main": "./client.js",
+  "dependencies": {
+    "vscode-languageclient": "^7.0.0",
+    "vscode-languageserver": "^7.0.0",
+    "vscode-languageserver-protocol": "^3.15.0"
   }
 }
