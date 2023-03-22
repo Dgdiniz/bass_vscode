@@ -45,9 +45,6 @@
       }
     ]
   },
-  "activationEvents": [
-    "onLanguage:snes"
-  ],
   "main": "./client.js",
   "dependencies": {
     "vscode-languageclient": "^7.0.0",
