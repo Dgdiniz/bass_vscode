@@ -32,7 +32,7 @@
 			"patterns": [
 				{
 					"match": "\\b(todo|fixme|xxx|warning|danger|note|notice|bug|author|date)\\b",
-					"name": "keyword.other.documentation"
+					"name": "entity.name.tag"
 				}
 			]
 		},
@@ -44,7 +44,7 @@
 			"patterns": [
 				{
 					"match": "\\b(todo|fixme|xxx|warning|danger|note|notice|bug|author|date)\\b",
-					"name": "keyword.other.documentation"
+					"name": "entity.name.tag"
 				}
 			]
 		},
@@ -70,11 +70,11 @@
 		},
 		{
 			"match": "\\b(x|y|a|s)\\b",
-			"name": "variable.language"
+			"name": "entity.name.tag"
 		},
 		{
 			"match": "\\$(?:\\h)+|(?:0x\\h+)|(?:\\d+)|%(?:[01]+)|0b[01]+|0o[0-7]+",
-			"name": "constant.numeric"
+			"name": "constant.numeric.decimal.js"
 		},
 		{
 			"match": "[+-/*<>=&|^!~]",
@@ -82,7 +82,7 @@
 		},
 		{
 			"match": "#",
-			"name": "constant.numeric"
+			"name": "constant.numeric.decimal.js"
 		},
 		{
 			"name": "variable.language",
