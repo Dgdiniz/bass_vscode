@@ -12,10 +12,9 @@
   "contributes": {
     "languages": [
       {
-        "id": "snes",
+        "id": "bass-snes",
         "aliases": [
-          "snes",
-          "Snes"
+          "bass-snes"
         ],
         "extensions": [
           ".snes.asm"
@@ -39,7 +38,7 @@
     ],
     "grammars": [
       {
-        "language": "snes",
+        "language": "bass-snes",
         "scopeName": "source.bass",
         "path": "./syntaxes/snes.asm.tmLanguage.json"
       }
