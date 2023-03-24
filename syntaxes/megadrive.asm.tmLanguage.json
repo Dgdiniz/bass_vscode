@@ -1,0 +1,102 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "bass-megadrive",
+	"patterns": [
+		{
+			"include": "#keywords"
+		},
+		{
+			"include": "#strings"
+		},
+		{
+			"match": "\\b(arch|architecture|array|array.size|array.sort|assert|base|binary:|char:|constant|copy|db|dd|define|defined|delete|dequeue|dl|dq|ds|dw|else|endian|enqueue|error|evaluate|expression|file.size|file.exists|fill|float32|float64|function|global|hex:|include|inline|insert|macro|map|namespace|notice|origin|output|parent|print|pullvar|pushvar|putchar|read|scope|tracker|variable|warning|while)\\b",
+			"name": "variable.parameter"
+		},
+		{
+			"match": "\\b[_a-z][_a-z0-9.]*:?",
+			"name": "variable.language"
+		},
+		{
+			"name": "comment.line.double-slash",
+			"begin": "//",
+			"end": "$",
+			"captures": {
+				"0": {
+					"name": "punctuation.definition.comment"
+				}
+			},
+			"patterns": [
+				{
+					"match": "\\b(todo|fixme|xxx|warning|danger|note|notice|bug|author|date)\\b",
+					"name": "entity.name.tag"
+				}
+			]
+		},
+		{
+			"name": "comment.block",
+			"begin": "if 0 {",
+			"end": "}",
+			"contentName": "comment.block",
+			"patterns": [
+				{
+					"match": "\\b(todo|fixme|xxx|warning|danger|note|notice|bug|author|date)\\b",
+					"name": "entity.name.tag"
+				}
+			]
+		},
+		{
+			"name": "string.quoted.double",
+			"begin": "\"",
+			"end": "\"|$",
+			"captures": {
+				"0": {
+					"name": "punctuation.definition.string"
+				}
+			}
+		},
+		{
+			"name": "string.quoted.single",
+			"begin": "'",
+			"end": "'|$",
+			"captures": {
+				"0": {
+					"name": "punctuation.definition.string"
+				}
+			}
+		},
+		{
+			"match": "\\$(?:\\h)+|(?:0x\\h+)|(?:\\d+)|%(?:[01]+)|0b[01]+|0o[0-7]+",
+			"name": "constant.numeric.decimal.js"
+		},
+		{
+			"match": "[+-/*<>=&|^!~]",
+			"name": "keyword.operator"
+		},
+		{
+			"match": "#",
+			"name": "constant.numeric.decimal.js"
+		}
+	],
+	"repository": {
+		"keywords": {
+			"patterns": [
+				{
+					"name": "keyword.control.asm",
+					"match": "\\b(if|for|return)\\b"
+				}
+			]
+		},
+		"strings": {
+			"name": "string.quoted.double.asm",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.asm",
+					"match": "\\\\."
+				}
+			]
+		}
+	},
+	"scopeName": "source.bass"
+}

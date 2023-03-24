@@ -18,16 +18,19 @@ function activate(context) {
     // Options to control the language client
     const clientOptions = {
         documentSelector: [
-            { scheme: 'file', language: 'bass-snes' }, // Replace 'yourLanguageId' with the language ID you want to support.
+            { scheme: 'file', language: 'bass' },
+            { scheme: 'file', language: 'bass-snes' },
+            { scheme: 'file', language: 'bass-megadrive' },
+            { scheme: 'file', language: 'bass-nes' },
         ],
         synchronize: {
-            configurationSection: 'bass-snes', // Replace 'yourLanguageId' with your language ID.
+            configurationSection: 'bass',
             fileEvents: vscode.workspace.createFileSystemWatcher('**/.clientrc'),
         },
     };
 
     // Create the language client and start the client.
-    client = new LanguageClient('bass-snes', 'bass-highlight', serverOptions, clientOptions);
+    client = new LanguageClient('bass', 'bass-highlight', serverOptions, clientOptions);
     client.start();
 }
 
