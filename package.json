@@ -12,6 +12,18 @@
   "contributes": {
     "languages": [
       {
+        "id": "bass",
+        "aliases": [
+          "bass",
+          "Bass"
+        ],
+        "extensions": [
+          ".asm",
+          ".nes.asm"
+        ],
+        "configuration": "./language-configuration.json"
+      },
+      {
         "id": "bass-snes",
         "aliases": [
           "bass-snes"
@@ -22,16 +34,30 @@
         "configuration": "./language-configuration.json"
       },
       {
-        "id": "bass",
+        "id": "bass-megadrive",
         "aliases": [
-          "bass",
-          "Bass"
+          "bass-megadrive",
+          "bass-md",
+          "bass-genesis",
+          "bass-segagenesis"
         ],
         "extensions": [
-          ".asm",
-          ".nes.asm",
+          ".megadrive.asm",
           ".md.asm",
-          ".megadrive.asm"
+          ".genesis.asm",
+          ".segagenesis.asm"
+        ],
+        "configuration": "./language-configuration.json"
+      },
+      {
+        "id": "bass-nes",
+        "aliases": [
+          "bass-nes",
+          "bass-famicom"
+        ],
+        "extensions": [
+          ".nes.asm",
+          ".famicom.asm"
         ],
         "configuration": "./language-configuration.json"
       }
@@ -41,6 +67,16 @@
         "language": "bass-snes",
         "scopeName": "source.bass",
         "path": "./syntaxes/snes.asm.tmLanguage.json"
+      },
+      {
+        "language": "bass-megadrive",
+        "scopeName": "source.bass",
+        "path": "./syntaxes/megadrive.asm.tmLanguage.json"
+      },
+      {
+        "language": "bass-nes",
+        "scopeName": "source.bass",
+        "path": "./syntaxes/nes.asm.tmLanguage.json"
       }
     ]
   },
