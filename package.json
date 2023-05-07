@@ -1,8 +1,8 @@
 {
-  "name": "bass-highlight",
-  "displayName": "bass_highlight",
-  "description": "Bass assembly extension",
-  "version": "0.0.1",
+  "name": "bass-vscode",
+  "displayName": "Bass",
+  "description": "Extension for programming for Snes, Sega Genesis, Nes, among many other old consoles using the Bass assembler.",
+  "version": "1.0.0",
   "engines": {
     "vscode": "^1.76.0"
   },
@@ -80,7 +80,12 @@
       }
     ]
   },
-  "main": "./client.js",
+  "main": "./main.js",
+  "activationEvents": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dgdiniz/bass_highlight.git"
+  },
   "dependencies": {
     "vscode-languageclient": "^7.0.0",
     "vscode-languageserver": "^8.1.0",

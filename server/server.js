@@ -41,6 +41,18 @@ connection.onInitialize(() => ({
     },
 }));
 
+connection.onRequest("getDiagnostics", (params) => {
+    return new Promise((resolve) => {
+      getBassDiagnostics((results) => {
+        const diagnostics = results.filter((diagnostic) =>
+          params.uri.includes(diagnostic["source"])
+        );
+  
+        resolve(diagnostics);
+      });
+    });
+  });
+
 connection.onCompletion(provideCompletionItems);
 
 documents.onDidChangeContent((change) => {
