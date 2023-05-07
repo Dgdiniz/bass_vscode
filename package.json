@@ -18,8 +18,7 @@
           "Bass"
         ],
         "extensions": [
-          ".asm",
-          ".nes.asm"
+          ".asm"
         ],
         "configuration": "./language-configuration.json"
       },
@@ -65,17 +64,17 @@
     "grammars": [
       {
         "language": "bass-snes",
-        "scopeName": "source.bass",
+        "scopeName": "source.bass-snes",
         "path": "./syntaxes/snes.asm.tmLanguage.json"
       },
       {
         "language": "bass-megadrive",
-        "scopeName": "source.bass",
+        "scopeName": "source.bass-megadrive",
         "path": "./syntaxes/megadrive.asm.tmLanguage.json"
       },
       {
         "language": "bass-nes",
-        "scopeName": "source.bass",
+        "scopeName": "source.bass-nes",
         "path": "./syntaxes/nes.asm.tmLanguage.json"
       }
     ]
