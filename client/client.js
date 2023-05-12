@@ -1,6 +1,6 @@
 const vscode = require('vscode');
 const { LanguageClient, TransportKind } = require('vscode-languageclient');
-const { applyErrorDecorationsForActiveEditor } = require('./errorDecorations');
+const { applyErrorDecorationsForActiveEditor, filterErrorDiagnostics, createErrorDecorations, createErrorDecorationType } = require('./errorDecorations');
 
 function getServerOptions(context) {
     const serverModule = context.asAbsolutePath('server/server.js');
@@ -28,12 +28,19 @@ function getClientOptions() {
 }
 
 function createAndStartLanguageClient(context, serverOptions, clientOptions) {
+    const errorDecorationType = createErrorDecorationType();
     const languageClient = new LanguageClient('bass', 'bass-vscode', serverOptions, clientOptions);
     languageClient.start();
 
     languageClient.onReady().then(() => {
-        languageClient.onNotification("textDocument/didChange", () => applyErrorDecorationsForActiveEditor(vscode.window.activeTextEditor, languageClient, errorDecorationType));
-        languageClient.onNotification("textDocument/didSave", () => applyErrorDecorationsForActiveEditor(vscode.window.activeTextEditor, languageClient, errorDecorationType));
+        const errorDecorationType = createErrorDecorationType();
+
+        languageClient.onNotification("textDocument/publishDiagnostics", ({ uri, diagnostics }) => {
+            const editor = vscode.window.activeTextEditor;
+            if (editor && editor.document.uri.toString() === uri) {
+                applyErrorDecorationsForActiveEditor(editor, diagnostics, errorDecorationType);
+            }
+        });
     });
 
     return languageClient;

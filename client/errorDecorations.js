@@ -6,8 +6,7 @@ function createErrorDecorationType() {
     });
 }
 
-async function applyErrorDecorationsForActiveEditor(editor, client, errorDecorationType) {
-    const diagnostics = await requestDiagnostics(editor.document.uri.toString(), client);
+async function applyErrorDecorationsForActiveEditor(editor, diagnostics, errorDecorationType) {
     const errorDiagnostics = filterErrorDiagnostics(diagnostics);
     const decorations = createErrorDecorations(errorDiagnostics);
 
