@@ -2,9 +2,9 @@ const vscode = require('vscode');
 
 function createWordDecorationType() {
     return vscode.window.createTextEditorDecorationType({
-        backgroundColor: 'rgba(255, 255, 0, 0.2)', // Semi-transparent yellow
+        backgroundColor: 'rgba(0, 204, 100, 0.6)', // Semi-transparent yellow
         borderRadius: '3px', // Rounded border (optional)
-        border: '1px solid rgba(255, 0, 0, 0.8)', // Border with some transparency
+        border: '1px solid rgba(0, 204, 100, 0.9)', // Border with some transparency
         borderWidth: '3px' // Border width
     });
 }
