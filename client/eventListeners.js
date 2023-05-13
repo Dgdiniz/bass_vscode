@@ -12,19 +12,7 @@ function registerEventListeners(context, client, errorDecorationType) {
         vscode.workspace.onDidChangeTextDocument((event) => {
             const editor = vscode.window.activeTextEditor;
             if (editor && event.document === editor.document) {
-                let linesInsertedOrRemoved = false;
-
-                for (const change of event.contentChanges) {
-                    const linesBefore = change.range.end.line - change.range.start.line + 1;
-                    const linesAfter = change.text.split('\n').length;
-
-                    if (linesBefore !== linesAfter) {
-                        linesInsertedOrRemoved = true;
-                        break;
-                    }
-                }
-
-                if (linesInsertedOrRemoved) {
+                if (wasLinesInsertedOrRemoved(event)) {
                     debouncedSave(event.document);
                 }
 
@@ -42,6 +30,24 @@ function registerEventListeners(context, client, errorDecorationType) {
     );
 }
 
+function wasLinesInsertedOrRemoved(event) {
+    let linesInsertedOrRemoved = false;
+
+    for (const change of event.contentChanges) {
+        const linesBefore = change.range.end.line - change.range.start.line + 1;
+        const linesAfter = change.text.split('\n').length;
+
+        if (linesBefore !== linesAfter) {
+            linesInsertedOrRemoved = true;
+            break;
+        }
+    }
+
+    return linesInsertedOrRemoved;
+}
+
 module.exports = {
     registerEventListeners,
 };
+
+
