@@ -1,15 +1,33 @@
 const vscode = require('vscode');
-const { applyErrorDecorationsForActiveEditor } = require('./errorDecorations');
+const _ = require('lodash');
 const { createWordDecorationType, applyWordDecorationsForActiveEditor } = require('./keywordDecorations');
 
 function registerEventListeners(context, client, errorDecorationType) {
     const wordDecorationType = createWordDecorationType();
 
+    // Avoid saving the document too often when typing
+    const debouncedSave = _.debounce((document) => document.save(), 180);
+
     context.subscriptions.push(
         vscode.workspace.onDidChangeTextDocument((event) => {
             const editor = vscode.window.activeTextEditor;
             if (editor && event.document === editor.document) {
-                applyErrorDecorationsForActiveEditor(editor, client, errorDecorationType);
+                let linesInsertedOrRemoved = false;
+
+                for (const change of event.contentChanges) {
+                    const linesBefore = change.range.end.line - change.range.start.line + 1;
+                    const linesAfter = change.text.split('\n').length;
+
+                    if (linesBefore !== linesAfter) {
+                        linesInsertedOrRemoved = true;
+                        break;
+                    }
+                }
+
+                if (linesInsertedOrRemoved) {
+                    debouncedSave(event.document);
+                }
+
                 applyWordDecorationsForActiveEditor(editor, wordDecorationType);
             }
         })
@@ -18,7 +36,6 @@ function registerEventListeners(context, client, errorDecorationType) {
     context.subscriptions.push(
         vscode.window.onDidChangeActiveTextEditor((editor) => {
             if (editor) {
-                applyErrorDecorationsForActiveEditor(editor, client, errorDecorationType);
                 applyWordDecorationsForActiveEditor(editor, wordDecorationType);
             }
         })

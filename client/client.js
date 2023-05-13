@@ -28,7 +28,6 @@ function getClientOptions() {
 }
 
 function createAndStartLanguageClient(context, serverOptions, clientOptions) {
-    const errorDecorationType = createErrorDecorationType();
     const languageClient = new LanguageClient('bass', 'bass-vscode', serverOptions, clientOptions);
     languageClient.start();
 
