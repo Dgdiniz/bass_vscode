@@ -1,6 +1,8 @@
 const vscode = require('vscode');
 const _ = require('lodash');
 const { createWordDecorationType, applyWordDecorationsForActiveEditor } = require('./keywordDecorations');
+const { applyErrorDecorationsForActiveEditor } = require('./errorDecorations');
+const state = require('./state');
 
 function registerEventListeners(context, client, errorDecorationType) {
     const wordDecorationType = createWordDecorationType();
@@ -25,6 +27,11 @@ function registerEventListeners(context, client, errorDecorationType) {
     context.subscriptions.push(
         vscode.window.onDidChangeActiveTextEditor((editor) => {
             if (editor) {
+                const filteredDiagnostics = state.sharedDiagnostics.filter((diagnostic) =>
+                    editor.document.uri.fsPath.includes(diagnostic.source)
+                );
+
+                applyErrorDecorationsForActiveEditor(editor, filteredDiagnostics, errorDecorationType);
                 applyWordDecorationsForActiveEditor(editor, wordDecorationType);
             }
         })

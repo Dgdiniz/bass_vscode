@@ -22,9 +22,7 @@ const getDiagnostics = (change) =>
     getBassDiagnostics(function (results) {
         connection.sendDiagnostics({
             uri: change.document.uri,
-            diagnostics: results.filter((diagnostic) =>
-                change.document.uri.includes(diagnostic["source"])
-            ),
+            diagnostics: results
         });
     });
 
@@ -43,15 +41,15 @@ connection.onInitialize(() => ({
 
 connection.onRequest("getDiagnostics", (params) => {
     return new Promise((resolve) => {
-      getBassDiagnostics((results) => {
-        const diagnostics = results.filter((diagnostic) =>
-          params.uri.includes(diagnostic["source"])
-        );
-  
-        resolve(diagnostics);
-      });
+        getBassDiagnostics((results) => {
+            const diagnostics = results.filter((diagnostic) =>
+                params.uri.includes(diagnostic["source"])
+            );
+
+            resolve(diagnostics);
+        });
     });
-  });
+});
 
 connection.onCompletion(provideCompletionItems);
 
