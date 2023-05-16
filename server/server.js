@@ -20,9 +20,22 @@ const getBassDiagnostics = (callback) => {
 
 const getDiagnostics = (change) =>
     getBassDiagnostics(function (results) {
+        // Bass is generating duplicate diagnostics for some reason,
+        // so we need to filter them out.
+        let uniqueDiagnostics = results.reduce((unique, o) => {
+            if (!unique.some(obj => obj.severity === o.severity && 
+                obj.message === o.message &&
+                obj.source === o.source &&
+                JSON.stringify(obj.range) === JSON.stringify(o.range))) {
+                unique.push(o);
+            }
+            
+            return unique;
+        }, []);
+
         connection.sendDiagnostics({
             uri: change.document.uri,
-            diagnostics: results
+            diagnostics: uniqueDiagnostics
         });
     });
 
