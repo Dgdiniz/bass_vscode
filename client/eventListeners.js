@@ -1,7 +1,7 @@
 const vscode = require('vscode');
 const _ = require('lodash');
 const { createWordDecorationType, applyWordDecorationsForActiveEditor } = require('./keywordDecorations');
-const { applyErrorDecorationsForActiveEditor, removeErrorDecorationsForActiveEditor } = require('./errorDecorations');
+const { applyErrorDecorationsForActiveEditor } = require('./errorDecorations');
 const state = require('./state');
 
 function registerEventListeners(context, client) {
@@ -26,7 +26,6 @@ function registerEventListeners(context, client) {
 
     context.subscriptions.push(
         vscode.window.onDidChangeActiveTextEditor((editor) => {
-            console.log(`Tab switched to ${editor.document.uri.toString()}`);
             if (editor) {
                 const filteredDiagnostics = state.sharedDiagnostics.filter((diagnostic) =>
                     editor.document.uri.fsPath.includes(diagnostic.source)

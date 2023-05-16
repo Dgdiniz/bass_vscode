@@ -1,10 +1,9 @@
 const vscode = require('vscode');
 const { LanguageClient, TransportKind } = require('vscode-languageclient');
-const { applyErrorDecorationsForActiveEditor, filterErrorDiagnostics, createErrorDecorations, createErrorDecorationType } = require('./errorDecorations');
+const { applyErrorDecorationsForActiveEditor } = require('./errorDecorations');
 const state = require('./state');
 
 let diagnosticsCollection = vscode.languages.createDiagnosticCollection('bass-vscode');
-
 
 function getServerOptions(context) {
     const serverModule = context.asAbsolutePath('server/server.js');
@@ -37,7 +36,6 @@ function createAndStartLanguageClient(context, serverOptions, clientOptions) {
 
     languageClient.onReady().then(() => {
         languageClient.onNotification("textDocument/publishDiagnostics", ({ uri, diagnostics }) => {
-            console.log(`Received diagnostics for ${vscode.window.activeTextEditor.document.uri.toString()}`);
             state.sharedDiagnostics = diagnostics;
             const editor = vscode.window.activeTextEditor;
 
@@ -49,8 +47,8 @@ function createAndStartLanguageClient(context, serverOptions, clientOptions) {
                 applyErrorDecorationsForActiveEditor(editor, filteredDiagnostics);
             }
 
+            // Giving back the diagnostics to the editor
             diagnosticsCollection.set(vscode.Uri.parse(uri), filteredDiagnostics);
-
         });
     });
 

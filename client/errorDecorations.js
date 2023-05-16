@@ -9,12 +9,8 @@ function createErrorDecorationType() {
 }
 
 async function applyErrorDecorationsForActiveEditor(editor, diagnostics) {
-    console.log(`Applying decorations for ${editor.document.uri.toString()}`);
-
     const errorDiagnostics = filterErrorDiagnostics(diagnostics);
     const decorations = createErrorDecorations(errorDiagnostics);
-
-    console.log(`Applying ${decorations.length} decorations for ${editor.document.uri.toString()}`);
 
     editor.setDecorations(errorDecorationType, decorations);
 }
@@ -24,7 +20,6 @@ async function removeErrorDecorationsForActiveEditor(editor) {
 }
 
 async function requestDiagnostics(uri, client) {
-    console.log("Getting diagnostics...");
     return await client.sendRequest("getDiagnostics", { uri });
 }
 
