@@ -34,21 +34,48 @@ function createAndStartLanguageClient(context, serverOptions, clientOptions) {
     const languageClient = new LanguageClient('bass', 'bass-vscode', serverOptions, clientOptions);
     languageClient.start();
 
+    const path = require('path');
+
     languageClient.onReady().then(() => {
         languageClient.onNotification("textDocument/publishDiagnostics", ({ uri, diagnostics }) => {
             state.sharedDiagnostics = diagnostics;
             const editor = vscode.window.activeTextEditor;
 
-            const filteredDiagnostics = diagnostics.filter((diagnostic) =>
-                editor.document.uri.fsPath.includes(diagnostic.source)
-            );
+            // Get the workspace root.
+            const workspaceRoot = vscode.workspace.workspaceFolders[0].uri.fsPath;
 
-            if (editor && editor.document.uri.toString() === uri) {
-                applyErrorDecorationsForActiveEditor(editor, filteredDiagnostics);
+            // Map to store diagnostics for each source file.
+            const fileDiagnosticsMap = new Map();
+
+            // Iterate over diagnostics, sorting them into the map by source file.
+            diagnostics.forEach(diagnostic => {
+                // Add the workspace root to the source field of each diagnostic.
+                diagnostic.source = path.join(workspaceRoot, diagnostic.source);
+
+                if (fileDiagnosticsMap.has(diagnostic.source)) {
+                    fileDiagnosticsMap.get(diagnostic.source).push(diagnostic);
+                } else {
+                    fileDiagnosticsMap.set(diagnostic.source, [diagnostic]);
+                }
+            });
+
+            // Clear the previous diagnostics collection.
+            diagnosticsCollection.clear();
+
+            // Apply decorations and update diagnostics collection for each source file.
+            fileDiagnosticsMap.forEach((fileDiagnostics, sourceFile) => {
+                if (editor && editor.document.uri.fsPath.includes(sourceFile)) {
+                    applyErrorDecorationsForActiveEditor(editor, fileDiagnostics);
+                }
+
+                // Update the diagnosticsCollection for this file only.
+                diagnosticsCollection.set(vscode.Uri.file(sourceFile), fileDiagnostics);
+            });
+
+            // If there are no diagnostics for the current file, clear the error decorations.
+            if (editor && !fileDiagnosticsMap.has(editor.document.uri.fsPath)) {
+                applyErrorDecorationsForActiveEditor(editor, []);
             }
-
-            // Giving back the diagnostics to the editor
-            diagnosticsCollection.set(vscode.Uri.parse(uri), filteredDiagnostics);
         });
     });
 
