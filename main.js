@@ -14,8 +14,7 @@ function activate(context) {
     const clientOptions = getClientOptions();
 
     client = createAndStartLanguageClient(context, serverOptions, clientOptions);
-    errorDecorationType = createErrorDecorationType();
-    registerEventListeners(context, client, errorDecorationType);
+    registerEventListeners(context, client);
 }
 
 function deactivate() {

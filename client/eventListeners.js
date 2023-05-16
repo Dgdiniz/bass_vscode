@@ -1,10 +1,10 @@
 const vscode = require('vscode');
 const _ = require('lodash');
 const { createWordDecorationType, applyWordDecorationsForActiveEditor } = require('./keywordDecorations');
-const { applyErrorDecorationsForActiveEditor } = require('./errorDecorations');
+const { applyErrorDecorationsForActiveEditor, removeErrorDecorationsForActiveEditor } = require('./errorDecorations');
 const state = require('./state');
 
-function registerEventListeners(context, client, errorDecorationType) {
+function registerEventListeners(context, client) {
     const wordDecorationType = createWordDecorationType();
 
     // Avoid saving the document too often when typing
@@ -16,7 +16,7 @@ function registerEventListeners(context, client, errorDecorationType) {
 
             if (editor && event.document === editor.document) {
                 if (wasLinesInsertedOrRemoved(event)) {
-                    debouncedSave(event.document);
+                    //debouncedSave(event.document);
                 }
 
                 applyWordDecorationsForActiveEditor(editor, wordDecorationType);
@@ -26,12 +26,14 @@ function registerEventListeners(context, client, errorDecorationType) {
 
     context.subscriptions.push(
         vscode.window.onDidChangeActiveTextEditor((editor) => {
+            console.log(`Tab switched to ${editor.document.uri.toString()}`);
             if (editor) {
                 const filteredDiagnostics = state.sharedDiagnostics.filter((diagnostic) =>
                     editor.document.uri.fsPath.includes(diagnostic.source)
                 );
 
-                applyErrorDecorationsForActiveEditor(editor, filteredDiagnostics, errorDecorationType);
+                debouncedSave(editor.document);
+                applyErrorDecorationsForActiveEditor(editor, filteredDiagnostics);
                 applyWordDecorationsForActiveEditor(editor, wordDecorationType);
             }
         })

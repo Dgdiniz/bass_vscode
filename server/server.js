@@ -53,7 +53,7 @@ connection.onRequest("getDiagnostics", (params) => {
 
 connection.onCompletion(provideCompletionItems);
 
-documents.onDidChangeContent((change) => {
+documents.onDidOpen((change) => {
     getDiagnostics(change);
 });
 

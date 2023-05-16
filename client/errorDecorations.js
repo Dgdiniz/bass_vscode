@@ -1,19 +1,30 @@
 const vscode = require('vscode');
 
+const errorDecorationType = createErrorDecorationType();
+
 function createErrorDecorationType() {
     return vscode.window.createTextEditorDecorationType({
-        backgroundColor: 'rgba(255, 0, 0, 0.8)',
+        backgroundColor: 'rgba(255, 0, 0, 1)',
     });
 }
 
-async function applyErrorDecorationsForActiveEditor(editor, diagnostics, errorDecorationType) {
+async function applyErrorDecorationsForActiveEditor(editor, diagnostics) {
+    console.log(`Applying decorations for ${editor.document.uri.toString()}`);
+
     const errorDiagnostics = filterErrorDiagnostics(diagnostics);
     const decorations = createErrorDecorations(errorDiagnostics);
+
+    console.log(`Applying ${decorations.length} decorations for ${editor.document.uri.toString()}`);
 
     editor.setDecorations(errorDecorationType, decorations);
 }
 
+async function removeErrorDecorationsForActiveEditor(editor) {
+    editor.setDecorations(errorDecorationType, []);
+}
+
 async function requestDiagnostics(uri, client) {
+    console.log("Getting diagnostics...");
     return await client.sendRequest("getDiagnostics", { uri });
 }
 
@@ -37,4 +48,5 @@ function createErrorDecorations(errorDiagnostics) {
 module.exports = {
     createErrorDecorationType,
     applyErrorDecorationsForActiveEditor,
+    removeErrorDecorationsForActiveEditor,
 };

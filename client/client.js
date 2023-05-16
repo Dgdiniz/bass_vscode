@@ -36,9 +36,8 @@ function createAndStartLanguageClient(context, serverOptions, clientOptions) {
     languageClient.start();
 
     languageClient.onReady().then(() => {
-        const errorDecorationType = createErrorDecorationType();
-
         languageClient.onNotification("textDocument/publishDiagnostics", ({ uri, diagnostics }) => {
+            console.log(`Received diagnostics for ${vscode.window.activeTextEditor.document.uri.toString()}`);
             state.sharedDiagnostics = diagnostics;
             const editor = vscode.window.activeTextEditor;
 
@@ -47,7 +46,7 @@ function createAndStartLanguageClient(context, serverOptions, clientOptions) {
             );
 
             if (editor && editor.document.uri.toString() === uri) {
-                applyErrorDecorationsForActiveEditor(editor, filteredDiagnostics, errorDecorationType);
+                applyErrorDecorationsForActiveEditor(editor, filteredDiagnostics);
             }
 
             diagnosticsCollection.set(vscode.Uri.parse(uri), filteredDiagnostics);
