@@ -56,7 +56,8 @@
         ],
         "extensions": [
           ".nes.asm",
-          ".famicom.asm"
+          ".famicom.asm",
+          ".fc.asm"
         ],
         "configuration": "./language-configuration.json"
       }
