@@ -2,12 +2,12 @@
   "name": "bass-vscode",
   "displayName": "Bass",
   "description": "Extension for programming for Snes, Sega Genesis, Nes, among many other old consoles using the Bass assembler.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "publisher": "DouglasGameiroDiniz",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Dgdiniz/bass_highlight.git"
+    "url": "https://github.com/Dgdiniz/bass_vscode.git"
   },
   "bugs": {
     "url": "https://github.com/Dgdiniz/bass_vscode/issues"
@@ -27,7 +27,11 @@
     "bass",
     "snes",
     "sega genesis",
-    "nes"
+    "nes",
+    "mega drive",
+    "super nintendo",
+    "famicom",
+    "super famicom"
   ],
   "icon": "icon.png",
   "contributes": {
