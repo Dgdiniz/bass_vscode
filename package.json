@@ -3,12 +3,33 @@
   "displayName": "Bass",
   "description": "Extension for programming for Snes, Sega Genesis, Nes, among many other old consoles using the Bass assembler.",
   "version": "1.0.0",
+  "publisher": "Douglas Gameiro Diniz",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dgdiniz/bass_highlight.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Dgdiniz/bass_vscode/issues"
+  },
+  "homepage": "https://github.com/Dgdiniz/bass_vscode",
+  "author": {
+    "name": "Douglas Gameiro Diniz"
+  },
   "engines": {
     "vscode": "^1.76.0"
   },
   "categories": [
     "Programming Languages"
   ],
+  "keywords": [
+    "assembly",
+    "bass",
+    "snes",
+    "sega genesis",
+    "nes"
+  ],
+  "icon": "icon.png",
   "contributes": {
     "languages": [
       {
@@ -82,10 +103,6 @@
   },
   "main": "./main.js",
   "activationEvents": [],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Dgdiniz/bass_highlight.git"
-  },
   "dependencies": {
     "vscode-languageclient": "^7.0.0",
     "vscode-languageserver": "^8.1.0",
